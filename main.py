@@ -11,16 +11,18 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
-        log_state()
-        for event in pygame.event.get():
+        dt = clock.tick(60) / 1000 # Set FPS cap
+        log_state() # Run debugging tool
+
+        for event in pygame.event.get(): # Quit loop if window closed
             if event.type == pygame.QUIT:
                 return
-        screen.fill("black")
-        player.draw(screen)
-        player.update(dt)
-        pygame.display.flip()
-        dt = clock.tick(60) / 1000
-        # print(dt) # Test to see if dt was indeed updating
+            
+        player.update(dt) # Update player position if key input detected
+        screen.fill("black") # Wipe previous frame
+        player.draw(screen) # Print new frame
+        pygame.display.flip() # Push new frame to Surface
+
 
 
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
