@@ -8,7 +8,12 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
+    
 
     while True:
         dt = clock.tick(60) / 1000 # Set FPS cap
@@ -18,9 +23,12 @@ def main():
             if event.type == pygame.QUIT:
                 return
             
-        player.update(dt) # Update player position if key input detected
+        #player.update(dt) # Update player position if key input detected
+        updatable.update(dt) # Update all updateable objects, not just the player
         screen.fill("black") # Wipe previous frame
-        player.draw(screen) # Print new frame
+        #player.draw(screen) # Print new frame
+        for drawing in drawable: # Print all items, not just the player
+            drawing.draw(screen)
         pygame.display.flip() # Push new frame to Surface
 
 
